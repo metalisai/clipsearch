@@ -47,7 +47,7 @@ while True:
         meta_hash = cur_clip['meta']
         video_meta = meta_json[meta_hash]
 
-        data = (db_json[idx]['text'], db_json[idx]['start'], db_json[idx]['end'], 'videoname.mp4')
+        data = (db_json[idx]['text'], db_json[idx]['start'], db_json[idx]['end'], video_meta['video'])
         clips.append(db_json[idx])
         print(f"{i}: {data}")
         i += 1
@@ -66,7 +66,7 @@ while True:
             # if you got a clip more than 24 hours long then you're in trouble!
             t = datetime.datetime.strptime(start_str, "%H:%M:%S.%f")
             td2 = datetime.timedelta(hours=t.hour, minutes=t.minute, seconds=t.second)
-            print(f"Play video {video_meta['video']} at {start_str}")
+            #print(f"Play video {video_meta['video']} at {start_str}")
             subprocess.run(["vlc", f"--start-time={td2.total_seconds()}", f"{video_meta['video']}"])
         elif action[:1] == 'q':
             exit()
